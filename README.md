@@ -1,6 +1,6 @@
 # Handoff — Enterprise Knowledge Transfer Agent
 
-> "Nothing leaves with them."
+> "Carry the knowledge forward."
 
 Handoff is an AI-powered enterprise agent that transforms employee offboarding from a knowledge risk into a structured asset. When HR initiates an offboarding event, Handoff automatically retrieves the departing employee's documents and data, conducts an intelligent exit interview, and generates a comprehensive knowledge transfer package for the incoming employee.
 
@@ -58,21 +58,19 @@ Knowledge Transfer Package
 git clone https://github.com/vpattangi/Handoff.git
 cd Handoff
 npm install
+```
+
 2. Create .env file (see .env.example)
-AZURE_OPENAI_KEY=your_key
-AZURE_OPENAI_ENDPOINT=your_endpoint
-AZURE_OPENAI_DEPLOYMENT=gpt-4o
-MICROSOFT_CLIENT_ID=your_client_id
-MICROSOFT_TENANT_ID=your_tenant_id
-MICROSOFT_CLIENT_SECRET=your_client_secret
-PORT=3000
 3. Authenticate with Microsoft 365
+``` bash
 node src/login.js
 Follow the device code flow to authenticate.
-
+```
 4. Start the server
-node src/index.js
+```node src/index.js
+```
 5. Open http://localhost:3000
+
 
 🤖 Agent Pipeline
 
