@@ -20,7 +20,7 @@ return response.choices[0].message.content;
 }
 
 async function collectKnowledge(employeeId) {
-const data = getAllEmployeeData(employeeId);
+const data = await getAllEmployeeData(employeeId);
 const content = await chat([{
 role: "user",
 content: `You are Handoff, an enterprise AI agent specializing in knowledge transfer.
@@ -53,7 +53,7 @@ throw new Error("Could not parse knowledge JSON");
 }
 
 async function conductExitInterview(employeeId, conversationHistory) {
-const data = getAllEmployeeData(employeeId);
+const data = await getAllEmployeeData(employeeId);
 return await chat([
 {
 role: "system",
@@ -64,7 +64,7 @@ content: `You are Handoff, conducting an exit interview for ${data.profile.name}
 }
 
 async function generateKnowledgePackage(employeeId, interviewTranscript) {
-const data = getAllEmployeeData(employeeId);
+const data = await getAllEmployeeData(employeeId);
 const knowledge = await collectKnowledge(employeeId);
 return await chat([{
 role: "user",
