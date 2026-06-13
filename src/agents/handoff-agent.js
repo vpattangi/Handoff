@@ -1,16 +1,21 @@
-const Groq = require('groq-sdk');
+const { OpenAI } = require('openai');
 const { getAllEmployeeData } = require('../tools/graph-mock');
 require('dotenv').config();
 
-const client = new Groq({
-apiKey: process.env.GROQ_API_KEY
+const client = new OpenAI({
+apiKey: process.env.AZURE_OPENAI_KEY,
+baseURL: `${process.env.AZURE_OPENAI_ENDPOINT}/openai/deployments/${process.env.AZURE_OPENAI_DEPLOYMENT}`,
+defaultHeaders: {
+'api-key': process.env.AZURE_OPENAI_KEY
+},
+defaultQuery: {
+'api-version': '2024-02-01'
+}
 });
-
-const MODEL = "llama-3.3-70b-versatile";
 
 async function chat(messages, maxTokens = 1500) {
 const response = await client.chat.completions.create({
-model: MODEL,
+model: process.env.AZURE_OPENAI_DEPLOYMENT,
 messages,
 temperature: 0.3,
 max_tokens: maxTokens
