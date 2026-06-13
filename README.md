@@ -54,7 +54,7 @@ Knowledge Transfer Package
 ### Setup
 
 1. Clone the repo
-```bash
+```
 git clone https://github.com/vpattangi/Handoff.git
 cd Handoff
 npm install
@@ -62,13 +62,14 @@ npm install
 
 2. Create .env file (see .env.example)
 3. Authenticate with Microsoft 365
-``` bash
+``` 
 node src/login.js
+```
 Follow the device code flow to authenticate.
-```
+
 4. Start the server
-```node src/index.js
-```
+```node src/index.js ```
+
 5. Open http://localhost:3000
 
 
@@ -97,10 +98,7 @@ Work IQ
 
 Microsoft Graph API integration pulls real enterprise data:
 
-• GET /me/messages — Outlook emails
-• GET /me/drive/root/children — OneDrive documents
+• Outlook emails
+• OneDrive documents
 • Authenticated via Microsoft Entra ID with delegated permissions
 
-👩‍🎓 Student Submission
-
-This project was built by Ragavardhini Pattangi, a computational neuroscience researcher and AI engineer, for the Microsoft Agents League @ AI Skills Fest 2026.
