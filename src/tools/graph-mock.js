@@ -39,7 +39,7 @@ repos: getEmployeeRepos(employeeId)
 };
 
 try {
-const realEmails = await getUserEmails('james.carter@example.com');
+const realEmails = await getUserEmails();
 if (realEmails && realEmails.length > 0) {
 console.log('[Graph] Using real Microsoft Graph email data');
 mockData.emails = realEmails.map(e => ({
@@ -56,7 +56,7 @@ console.log('[Graph] Falling back to mock emails:', e.message);
 }
 
 try {
-const realFiles = await getUserFiles('james.carter@example.com');
+const realFiles = await getUserFiles();
 if (realFiles && realFiles.length > 0) {
 console.log('[Graph] Using real Microsoft Graph file data');
 mockData.documents = realFiles.map(f => ({

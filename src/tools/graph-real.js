@@ -1,62 +1,42 @@
-const msal = require('@azure/msal-node');
+const fs = require('fs');
 require('dotenv').config();
 
-const msalConfig = {
-auth: {
-clientId: process.env.MICROSOFT_CLIENT_ID,
-clientSecret: process.env.MICROSOFT_CLIENT_SECRET,
-authority: `https://login.microsoftonline.com/${process.env.MICROSOFT_TENANT_ID}`
-}
-};
-
-const cca = new msal.ConfidentialClientApplication(msalConfig);
+const TOKEN_FILE = '.token.json';
 
 async function getToken() {
-const result = await cca.acquireTokenByClientCredential({
-scopes: ['https://graph.microsoft.com/.default']
-});
-return result.accessToken;
+if (!fs.existsSync(TOKEN_FILE)) {
+throw new Error('Not authenticated. Run: node src/login.js');
+}
+const tokenData = JSON.parse(fs.readFileSync(TOKEN_FILE, 'utf-8'));
+return tokenData.accessToken;
 }
 
-async function getUserProfile(userId) {
+async function getUserEmails() {
 try {
 const token = await getToken();
-const response = await fetch(`https://graph.microsoft.com/v1.0/users/${userId}`, {
+const res = await fetch('https://graph.microsoft.com/v1.0/me/messages?$top=10&$select=subject,bodyPreview,receivedDateTime', {
 headers: { Authorization: `Bearer ${token}` }
 });
-return await response.json();
-} catch(e) {
-console.log('[Graph] Using mock data for profile:', e.message);
-return null;
-}
-}
-
-async function getUserEmails(userId) {
-try {
-const token = await getToken();
-const response = await fetch(`https://graph.microsoft.com/v1.0/users/${userId}/messages?$top=10&$select=subject,bodyPreview,receivedDateTime`, {
-headers: { Authorization: `Bearer ${token}` }
-});
-const data = await response.json();
+const data = await res.json();
 return data.value || [];
 } catch(e) {
-console.log('[Graph] Using mock data for emails:', e.message);
+console.log('[Graph] Email fetch failed:', e.message);
 return null;
 }
 }
 
-async function getUserFiles(userId) {
+async function getUserFiles() {
 try {
 const token = await getToken();
-const response = await fetch(`https://graph.microsoft.com/v1.0/users/${userId}/drive/root/children`, {
+const res = await fetch('https://graph.microsoft.com/v1.0/me/drive/root/children', {
 headers: { Authorization: `Bearer ${token}` }
 });
-const data = await response.json();
+const data = await res.json();
 return data.value || [];
 } catch(e) {
-console.log('[Graph] Using mock data for files:', e.message);
+console.log('[Graph] Files fetch failed:', e.message);
 return null;
 }
 }
 
-module.exports = { getUserProfile, getUserEmails, getUserFiles };
+module.exports = { getUserEmails, getUserFiles };
