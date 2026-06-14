@@ -1,9 +1,9 @@
 # Handoff — Enterprise Knowledge Transfer Agent
 
-> "Nothing leaves with them."
+> "Carry the knowledge forward."
 
 Handoff is an AI-powered enterprise agent that transforms employee offboarding from a knowledge risk into a structured asset. When HR initiates an offboarding event, Handoff automatically retrieves the departing employee's documents and data, conducts an intelligent exit interview, and generates a comprehensive knowledge transfer package for the incoming employee.
-
+## Video DEMO: https://youtu.be/aTUU21BfmzQ 
 ## 🏆 Microsoft Agents League — Enterprise Agents Track
 
 **Microsoft IQ Layers Used:**
@@ -16,7 +16,11 @@ Every time an employee leaves a company, institutional knowledge walks out the d
 
 Handoff solves this by making knowledge transfer automatic, structured, and AI-powered.
 
+## 👩‍🎓 About the Developer
+CS Student @ San Jose State University. This project was inspired by a real KT failure experienced by a family member during corporate offboarding — institutional knowledge was lost because the departing employee didn't document anything. Built for the Microsoft Agents League Hackathon 2026.
+
 ## 🏗 Architecture
+```
 User (HR) → Handoff UI
 ↓
 UserProxy Agent
@@ -35,7 +39,7 @@ Azure OpenAI GPT-4o (Foundry IQ)
 ↓
 Knowledge Transfer Package
 → Ready for incoming employee
-
+```
 ## 🔧 Tech Stack
 
 - **Frontend:** HTML, CSS, JavaScript
@@ -54,25 +58,24 @@ Knowledge Transfer Package
 ### Setup
 
 1. Clone the repo
-```bash
+```
 git clone https://github.com/vpattangi/Handoff.git
 cd Handoff
 npm install
+```
+
 2. Create .env file (see .env.example)
-AZURE_OPENAI_KEY=your_key
-AZURE_OPENAI_ENDPOINT=your_endpoint
-AZURE_OPENAI_DEPLOYMENT=gpt-4o
-MICROSOFT_CLIENT_ID=your_client_id
-MICROSOFT_TENANT_ID=your_tenant_id
-MICROSOFT_CLIENT_SECRET=your_client_secret
-PORT=3000
 3. Authenticate with Microsoft 365
+``` 
 node src/login.js
+```
 Follow the device code flow to authenticate.
 
 4. Start the server
-node src/index.js
+```node src/index.js ```
+
 5. Open http://localhost:3000
+
 
 🤖 Agent Pipeline
 
@@ -99,10 +102,9 @@ Work IQ
 
 Microsoft Graph API integration pulls real enterprise data:
 
-• GET /me/messages — Outlook emails
-• GET /me/drive/root/children — OneDrive documents
+• Outlook emails
+• OneDrive documents
 • Authenticated via Microsoft Entra ID with delegated permissions
 
-👩‍🎓 Student Submission
-
-This project was built by Ragavardhini Pattangi, a computational neuroscience researcher and AI engineer, for the Microsoft Agents League @ AI Skills Fest 2026.
+## 📄 License
+Apache 2.0
