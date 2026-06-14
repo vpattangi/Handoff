@@ -17,7 +17,7 @@ Every time an employee leaves a company, institutional knowledge walks out the d
 Handoff solves this by making knowledge transfer automatic, structured, and AI-powered.
 
 ## 👩‍🎓 About the Developer
-CS Student @ San Jose State University. This project was inspired by a real KT failure experienced by a family member during corporate offboarding — institutional knowledge was lost because the departing employee didn't document anything. Built for the Microsoft Agents League Hackathon 2026.
+CS Student @ San Jose State University. This project was inspired by a real KT failure experienced by a family member during corporate offboarding. Built for the Microsoft Agents League Hackathon 2026.
 
 ## 🏗 Architecture
 ```
