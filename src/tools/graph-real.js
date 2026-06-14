@@ -3,12 +3,27 @@ require('dotenv').config();
 
 const TOKEN_FILE = '.token.json';
 
-async function getToken() {
-if (!fs.existsSync(TOKEN_FILE)) {
-throw new Error('Not authenticated. Run: node src/login.js');
+function getStoredToken() {
+if (!fs.existsSync(TOKEN_FILE)) return null;
+try {
+const data = JSON.parse(fs.readFileSync(TOKEN_FILE, 'utf-8'));
+const expiresOn = new Date(data.expiresOn);
+const now = new Date();
+const fiveMinutesFromNow = new Date(now.getTime() + 5 * 60 * 1000);
+if (expiresOn > fiveMinutesFromNow) {
+return data.accessToken;
 }
-const tokenData = JSON.parse(fs.readFileSync(TOKEN_FILE, 'utf-8'));
-return tokenData.accessToken;
+console.log('[Graph] Token expired or expiring soon');
+return null;
+} catch(e) {
+return null;
+}
+}
+
+async function getToken() {
+const stored = getStoredToken();
+if (stored) return stored;
+throw new Error('Microsoft Graph token expired. Please run: node src/login.js');
 }
 
 async function getUserEmails() {
@@ -17,6 +32,7 @@ const token = await getToken();
 const res = await fetch('https://graph.microsoft.com/v1.0/me/messages?$top=10&$select=subject,bodyPreview,receivedDateTime', {
 headers: { Authorization: `Bearer ${token}` }
 });
+if (!res.ok) throw new Error('Graph API returned ' + res.status);
 const data = await res.json();
 return data.value || [];
 } catch(e) {
@@ -31,6 +47,7 @@ const token = await getToken();
 const res = await fetch('https://graph.microsoft.com/v1.0/me/drive/root/children', {
 headers: { Authorization: `Bearer ${token}` }
 });
+if (!res.ok) throw new Error('Graph API returned ' + res.status);
 const data = await res.json();
 return data.value || [];
 } catch(e) {
