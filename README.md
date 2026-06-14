@@ -3,7 +3,7 @@
 > "Carry the knowledge forward."
 
 Handoff is an AI-powered enterprise agent that transforms employee offboarding from a knowledge risk into a structured asset. When HR initiates an offboarding event, Handoff automatically retrieves the departing employee's documents and data, conducts an intelligent exit interview, and generates a comprehensive knowledge transfer package for the incoming employee.
-## Video DEMO: https://youtu.be/aTUU21BfmzQ 
+## Video DEMO: [https://youtu.be/aTUU21BfmzQ ](https://youtu.be/voMd6P_id8w)
 ## 🏆 Microsoft Agents League — Enterprise Agents Track
 
 **Microsoft IQ Layers Used:**
