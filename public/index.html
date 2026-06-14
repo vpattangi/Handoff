@@ -5,607 +5,97 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Handoff</title>
 <style>
-:root {
---bg: #0a0a0f;
---surface: #111118;
---surface2: #1a1a24;
---border: #1e1e2e;
---blue: #0078d4;
---blue-light: #2899f5;
---teal: #00b4d8;
---teal-light: #48cae4;
---text: #f0f0f5;
---text-muted: #8888aa;
---text-dim: #555570;
---success: #00c896;
---warning: #ffb900;
---danger: #fc4e6f;
-}
-
-@media (prefers-color-scheme: light) {
-:root {
---bg: #f0f4f8;
---surface: #ffffff;
---surface2: #e8eef5;
---border: #d0dae6;
---text: #0a0a1a;
---text-muted: #4a5568;
---text-dim: #8899aa;
-}
-}
-
-* { margin: 0; padding: 0; box-sizing: border-box; }
-
-body {
-font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
-background: var(--bg);
-color: var(--text);
-min-height: 100vh;
-display: flex;
-flex-direction: column;
-}
-
-/* HEADER */
-.header {
-height: 52px;
-background: var(--surface);
-border-bottom: 1px solid var(--border);
-display: flex;
-align-items: center;
-padding: 0 24px;
-gap: 16px;
-position: sticky;
-top: 0;
-z-index: 100;
-backdrop-filter: blur(12px);
-}
-
-/* LOGO */
-.logo {
-display: flex;
-align-items: center;
-gap: 10px;
-text-decoration: none;
-}
-
-.logo-icon {
-width: 28px;
-height: 28px;
-position: relative;
-}
-
-.logo-icon svg {
-width: 28px;
-height: 28px;
-animation: logoSpin 6s ease-in-out infinite;
-}
-
-@keyframes logoSpin {
-0% { transform: rotate(0deg) scale(1); }
-25% { transform: rotate(45deg) scale(1.05); }
-50% { transform: rotate(0deg) scale(1); }
-75% { transform: rotate(-45deg) scale(1.05); }
-100% { transform: rotate(0deg) scale(1); }
-}
-
-.logo-text {
-font-size: 16px;
-font-weight: 700;
-letter-spacing: -0.3px;
-background: linear-gradient(135deg, var(--blue-light), var(--teal));
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
-background-clip: text;
-}
-
-.header-badges {
-display: flex;
-gap: 8px;
-margin-left: 8px;
-}
-
-.badge {
-padding: 3px 10px;
-border-radius: 20px;
-font-size: 11px;
-font-weight: 600;
-border: 1px solid;
-}
-
-.badge-blue {
-background: rgba(0, 120, 212, 0.12);
-color: var(--blue-light);
-border-color: rgba(0, 120, 212, 0.3);
-}
-
-.badge-teal {
-background: rgba(0, 180, 216, 0.12);
-color: var(--teal-light);
-border-color: rgba(0, 180, 216, 0.3);
-}
-
-.header-right {
-margin-left: auto;
-font-size: 12px;
-color: var(--text-muted);
-}
-
-/* LAYOUT */
-.app {
-display: flex;
-flex: 1;
-height: calc(100vh - 52px);
-overflow: hidden;
-}
-
-/* SIDEBAR */
-.sidebar {
-width: 280px;
-min-width: 280px;
-background: var(--surface);
-border-right: 1px solid var(--border);
-display: flex;
-flex-direction: column;
-overflow-y: auto;
-padding: 20px 16px;
-gap: 20px;
-}
-
-.sidebar-section-title {
-font-size: 10px;
-font-weight: 700;
-text-transform: uppercase;
-letter-spacing: 1px;
-color: var(--text-dim);
-margin-bottom: 8px;
-}
-
-/* EMPLOYEE CARD */
-.employee-card {
-background: linear-gradient(135deg, rgba(0,120,212,0.15), rgba(0,180,216,0.1));
-border: 1px solid rgba(0,180,216,0.2);
-border-radius: 8px;
-padding: 16px;
-}
-
-.employee-avatar {
-width: 40px;
-height: 40px;
-border-radius: 50%;
-background: linear-gradient(135deg, var(--blue), var(--teal));
-display: flex;
-align-items: center;
-justify-content: center;
-font-size: 16px;
-font-weight: 700;
-color: white;
-margin-bottom: 10px;
-}
-
-.employee-name {
-font-size: 15px;
-font-weight: 600;
-color: var(--text);
-margin-bottom: 2px;
-}
-
-.employee-role {
-font-size: 12px;
-color: var(--text-muted);
-margin-bottom: 12px;
-}
-
-.employee-stats {
-display: grid;
-grid-template-columns: 1fr 1fr;
-gap: 8px;
-}
-
-.emp-stat {
-background: rgba(0,0,0,0.2);
-border-radius: 6px;
-padding: 8px;
-}
-
-.emp-stat-label {
-font-size: 10px;
-color: var(--text-dim);
-text-transform: uppercase;
-letter-spacing: 0.5px;
-}
-
-.emp-stat-value {
-font-size: 13px;
-font-weight: 600;
-color: var(--teal-light);
-margin-top: 2px;
-}
-
-/* PIPELINE */
-.pipeline-steps {
-display: flex;
-flex-direction: column;
-gap: 4px;
-}
-
-.pipeline-step {
-display: flex;
-align-items: flex-start;
-gap: 12px;
-padding: 10px 12px;
-border-radius: 6px;
-border: 1px solid transparent;
-transition: all 0.3s ease;
-cursor: default;
-}
-
-.pipeline-step.idle {
-background: var(--surface2);
-border-color: var(--border);
-}
-
-.pipeline-step.active {
-background: rgba(0,120,212,0.1);
-border-color: rgba(0,120,212,0.4);
-}
-
-.pipeline-step.done {
-background: rgba(0,200,150,0.08);
-border-color: rgba(0,200,150,0.3);
-}
-
-.step-indicator {
-width: 24px;
-height: 24px;
-border-radius: 50%;
-display: flex;
-align-items: center;
-justify-content: center;
-font-size: 11px;
-font-weight: 700;
-flex-shrink: 0;
-margin-top: 1px;
-transition: all 0.3s;
-}
-
-.idle .step-indicator {
-background: var(--border);
-color: var(--text-dim);
-}
-
-.active .step-indicator {
-background: var(--blue);
-color: white;
-}
-
-.done .step-indicator {
-background: var(--success);
-color: white;
-}
-
-.step-info-title {
-font-size: 13px;
-font-weight: 600;
-color: var(--text);
-margin-bottom: 2px;
-}
-
-.step-info-desc {
-font-size: 11px;
-color: var(--text-muted);
-line-height: 1.4;
-}
-
-/* DATA SOURCES */
-.sources {
-display: grid;
-grid-template-columns: 1fr 1fr;
-gap: 6px;
-}
-
-.source-item {
-background: var(--surface2);
-border: 1px solid var(--border);
-border-radius: 6px;
-padding: 8px 10px;
-font-size: 11px;
-color: var(--text-muted);
-font-weight: 500;
-}
-
-.source-item.active {
-border-color: var(--teal);
-color: var(--teal-light);
-background: rgba(0,180,216,0.08);
-}
-
-/* MAIN CONTENT */
-.main-content {
-flex: 1;
-overflow-y: auto;
-padding: 24px;
-display: flex;
-flex-direction: column;
-gap: 16px;
-}
-
-/* CARDS */
-.card {
-background: var(--surface);
-border: 1px solid var(--border);
-border-radius: 8px;
-padding: 20px;
-}
-
-.card-header {
-font-size: 12px;
-font-weight: 700;
-text-transform: uppercase;
-letter-spacing: 0.8px;
-color: var(--text-muted);
-margin-bottom: 16px;
-padding-bottom: 12px;
-border-bottom: 1px solid var(--border);
-}
-
-/* START BUTTON */
-.start-area {
-display: flex;
-flex-direction: column;
-align-items: center;
-justify-content: center;
-padding: 40px;
-text-align: center;
-flex: 1;
-min-height: 300px;
-}
-
-.start-icon {
-width: 64px;
-height: 64px;
-margin-bottom: 20px;
-animation: pulse 2s ease-in-out infinite;
-}
-
-@keyframes pulse {
-0%, 100% { transform: scale(1); opacity: 1; }
-50% { transform: scale(1.05); opacity: 0.8; }
-}
-
-.start-title {
-font-size: 22px;
-font-weight: 300;
-margin-bottom: 8px;
-color: var(--text);
-}
-
-.start-title strong { font-weight: 700; }
-
-.start-desc {
-font-size: 14px;
-color: var(--text-muted);
-max-width: 400px;
-line-height: 1.6;
-margin-bottom: 28px;
-}
-
-.btn {
-padding: 10px 28px;
-border-radius: 4px;
-font-size: 14px;
-font-weight: 600;
-cursor: pointer;
-font-family: inherit;
-transition: all 0.2s;
-border: none;
-height: 40px;
-display: inline-flex;
-align-items: center;
-gap: 8px;
-}
-
-.btn-primary {
-background: linear-gradient(135deg, var(--blue), var(--teal));
-color: white;
-box-shadow: 0 4px 16px rgba(0,120,212,0.3);
-}
-
-.btn-primary:hover {
-box-shadow: 0 6px 20px rgba(0,120,212,0.5);
-transform: translateY(-1px);
-}
-
-.btn-primary:disabled {
-opacity: 0.6;
-cursor: not-allowed;
-transform: none;
-box-shadow: none;
-}
-
-.btn-secondary {
-background: var(--surface2);
-color: var(--text);
-border: 1px solid var(--border);
-}
-
-.btn-secondary:hover {
-border-color: var(--teal);
-color: var(--teal-light);
-}
-
-/* KNOWLEDGE GRID */
-.knowledge-grid {
-display: grid;
-grid-template-columns: 1fr 1fr 1fr;
-gap: 12px;
-}
-
-.knowledge-block {
-background: var(--surface2);
-border: 1px solid var(--border);
-border-radius: 6px;
-padding: 14px;
-}
-
-.knowledge-block-title {
-font-size: 10px;
-font-weight: 700;
-text-transform: uppercase;
-letter-spacing: 0.8px;
-margin-bottom: 10px;
-}
-
-.knowledge-block.systems .knowledge-block-title { color: var(--danger); }
-.knowledge-block.risks .knowledge-block-title { color: var(--warning); }
-.knowledge-block.relationships .knowledge-block-title { color: var(--teal-light); }
-
-.tag {
-display: inline-block;
-padding: 3px 8px;
-border-radius: 3px;
-font-size: 11px;
-font-weight: 500;
-margin: 2px;
-}
-
-.tag-red { background: rgba(252,78,111,0.15); color: #fc4e6f; border: 1px solid rgba(252,78,111,0.3); }
-.tag-teal { background: rgba(0,180,216,0.12); color: var(--teal-light); border: 1px solid rgba(0,180,216,0.3); }
-
-.risk-item {
-padding: 8px 10px;
-background: rgba(255,185,0,0.08);
-border-left: 2px solid var(--warning);
-border-radius: 2px;
-margin-bottom: 6px;
-font-size: 12px;
-color: var(--text);
-line-height: 1.4;
-}
-
-/* CHAT */
-.chat-box {
-height: 380px;
-overflow-y: auto;
-background: var(--surface2);
-border: 1px solid var(--border);
-border-radius: 6px;
-padding: 16px;
-margin-bottom: 12px;
-scroll-behavior: smooth;
-}
-
-.chat-box::-webkit-scrollbar { width: 4px; }
-.chat-box::-webkit-scrollbar-track { background: transparent; }
-.chat-box::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
-
-.msg { margin-bottom: 16px; }
-
-.msg-label {
-font-size: 10px;
-font-weight: 700;
-text-transform: uppercase;
-letter-spacing: 0.8px;
-margin-bottom: 4px;
-}
-
-.msg-label.agent { color: var(--blue-light); }
-.msg-label.user { color: var(--text-dim); }
-
-.msg-bubble {
-font-size: 13px;
-line-height: 1.6;
-color: var(--text);
-padding: 10px 14px;
-border-radius: 6px;
-border: 1px solid var(--border);
-background: var(--surface);
-}
-
-.msg-bubble.agent {
-border-color: rgba(0,120,212,0.2);
-background: rgba(0,120,212,0.05);
-}
-
-.chat-input-row {
-display: flex;
-gap: 8px;
-}
-
-.input {
-flex: 1;
-background: var(--surface2);
-border: 1px solid var(--border);
-color: var(--text);
-padding: 0 14px;
-border-radius: 4px;
-font-size: 14px;
-height: 40px;
-outline: none;
-font-family: inherit;
-transition: border-color 0.2s;
-}
-
-.input:focus { border-color: var(--blue); }
-
-/* PACKAGE */
-.package-box {
-background: var(--surface2);
-border: 1px solid var(--border);
-border-radius: 6px;
-padding: 20px;
-white-space: pre-wrap;
-line-height: 1.8;
-font-size: 13px;
-max-height: 500px;
-overflow-y: auto;
-color: var(--text);
-font-family: 'Segoe UI', sans-serif;
-}
-
-.hidden { display: none; }
-
-.loader {
-display: inline-block;
-width: 14px;
-height: 14px;
-border: 2px solid rgba(255,255,255,0.3);
-border-top-color: white;
-border-radius: 50%;
-animation: spin 0.7s linear infinite;
-}
-
-@keyframes spin { to { transform: rotate(360deg); } }
-
-/* SCANNING ANIMATION */
-.scan-line {
-height: 2px;
-background: linear-gradient(90deg, transparent, var(--teal), transparent);
-border-radius: 1px;
-margin-top: 8px;
-animation: scan 1.5s ease-in-out infinite;
-display: none;
-}
-
-.scanning .scan-line { display: block; }
-
-@keyframes scan {
-0% { transform: translateX(-100%); }
-100% { transform: translateX(100%); }
-}
+:root{--bg:#0a0a0f;--surface:#111118;--surface2:#1a1a24;--border:#1e1e2e;--blue:#0078d4;--blue-light:#2899f5;--teal:#00b4d8;--teal-light:#48cae4;--text:#f0f0f5;--text-muted:#8888aa;--text-dim:#555570;--success:#00c896;--warning:#ffb900;--danger:#fc4e6f;}
+@media(prefers-color-scheme:light){:root{--bg:#f0f4f8;--surface:#ffffff;--surface2:#e8eef5;--border:#d0dae6;--text:#0a0a1a;--text-muted:#4a5568;--text-dim:#8899aa;}}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column;}
+.header{height:52px;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 24px;gap:16px;position:sticky;top:0;z-index:100;}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.logo-icon svg{width:28px;height:28px;animation:logoSpin 6s ease-in-out infinite;}
+@keyframes logoSpin{0%{transform:rotate(0deg) scale(1);}25%{transform:rotate(45deg) scale(1.05);}50%{transform:rotate(0deg) scale(1);}75%{transform:rotate(-45deg) scale(1.05);}100%{transform:rotate(0deg) scale(1);}}
+.logo-text{font-size:16px;font-weight:700;letter-spacing:-0.3px;background:linear-gradient(135deg,var(--blue-light),var(--teal));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.header-badges{display:flex;gap:8px;margin-left:8px;}
+.badge{padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;border:1px solid;}
+.badge-blue{background:rgba(0,120,212,0.12);color:var(--blue-light);border-color:rgba(0,120,212,0.3);}
+.badge-teal{background:rgba(0,180,216,0.12);color:var(--teal-light);border-color:rgba(0,180,216,0.3);}
+.header-right{margin-left:auto;font-size:12px;color:var(--text-muted);}
+.app{display:flex;flex:1;height:calc(100vh - 52px);overflow:hidden;}
+.sidebar{width:280px;min-width:280px;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow-y:auto;padding:20px 16px;gap:20px;}
+.sidebar-section-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-dim);margin-bottom:8px;}
+.employee-card{background:linear-gradient(135deg,rgba(0,120,212,0.15),rgba(0,180,216,0.1));border:1px solid rgba(0,180,216,0.2);border-radius:8px;padding:16px;}
+.employee-avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--teal));display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:white;margin-bottom:10px;}
+.employee-name{font-size:15px;font-weight:600;color:var(--text);margin-bottom:2px;}
+.employee-role{font-size:12px;color:var(--text-muted);margin-bottom:12px;}
+.employee-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.emp-stat{background:rgba(0,0,0,0.2);border-radius:6px;padding:8px;}
+.emp-stat-label{font-size:10px;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.5px;}
+.emp-stat-value{font-size:13px;font-weight:600;color:var(--teal-light);margin-top:2px;}
+.pipeline-steps{display:flex;flex-direction:column;gap:4px;}
+.pipeline-step{display:flex;align-items:flex-start;gap:12px;padding:10px 12px;border-radius:6px;border:1px solid transparent;transition:all 0.3s ease;}
+.pipeline-step.idle{background:var(--surface2);border-color:var(--border);}
+.pipeline-step.active{background:rgba(0,120,212,0.1);border-color:rgba(0,120,212,0.4);}
+.pipeline-step.done{background:rgba(0,200,150,0.08);border-color:rgba(0,200,150,0.3);}
+.step-indicator{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;margin-top:1px;transition:all 0.3s;}
+.idle .step-indicator{background:var(--border);color:var(--text-dim);}
+.active .step-indicator{background:var(--blue);color:white;}
+.done .step-indicator{background:var(--success);color:white;}
+.step-info-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:2px;}
+.step-info-desc{font-size:11px;color:var(--text-muted);line-height:1.4;}
+.sources{display:grid;grid-template-columns:1fr 1fr;gap:6px;}
+.source-item{background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:8px 10px;font-size:11px;color:var(--text-muted);font-weight:500;}
+.source-item.active{border-color:var(--teal);color:var(--teal-light);background:rgba(0,180,216,0.08);}
+.main-content{flex:1;overflow-y:auto;padding:24px;display:flex;flex-direction:column;gap:16px;}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:20px;}
+.card-header{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:var(--text-muted);margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border);}
+.start-area{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px;text-align:center;flex:1;min-height:300px;}
+.start-icon{width:64px;height:64px;margin-bottom:20px;animation:pulse 2s ease-in-out infinite;}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:1;}50%{transform:scale(1.05);opacity:0.8;}}
+.start-title{font-size:22px;font-weight:300;margin-bottom:8px;color:var(--text);}
+.start-title strong{font-weight:700;}
+.start-desc{font-size:14px;color:var(--text-muted);max-width:400px;line-height:1.6;margin-bottom:28px;}
+.btn{padding:10px 28px;border-radius:4px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;transition:all 0.2s;border:none;height:40px;display:inline-flex;align-items:center;gap:8px;}
+.btn-primary{background:linear-gradient(135deg,var(--blue),var(--teal));color:white;box-shadow:0 4px 16px rgba(0,120,212,0.3);}
+.btn-primary:hover{box-shadow:0 6px 20px rgba(0,120,212,0.5);transform:translateY(-1px);}
+.btn-primary:disabled{opacity:0.6;cursor:not-allowed;transform:none;box-shadow:none;}
+.btn-secondary{background:var(--surface2);color:var(--text);border:1px solid var(--border);}
+.btn-secondary:hover{border-color:var(--teal);color:var(--teal-light);}
+.knowledge-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
+.knowledge-block{background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:14px;}
+.knowledge-block-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:10px;}
+.knowledge-block.systems .knowledge-block-title{color:var(--danger);}
+.knowledge-block.risks .knowledge-block-title{color:var(--warning);}
+.knowledge-block.relationships .knowledge-block-title{color:var(--teal-light);}
+.tag{display:inline-block;padding:3px 8px;border-radius:3px;font-size:11px;font-weight:500;margin:2px;}
+.tag-red{background:rgba(252,78,111,0.15);color:#fc4e6f;border:1px solid rgba(252,78,111,0.3);}
+.tag-teal{background:rgba(0,180,216,0.12);color:var(--teal-light);border:1px solid rgba(0,180,216,0.3);}
+.risk-item{padding:8px 10px;background:rgba(255,185,0,0.08);border-left:2px solid var(--warning);border-radius:2px;margin-bottom:6px;font-size:12px;color:var(--text);line-height:1.4;}
+.chat-box{height:380px;overflow-y:auto;background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:16px;margin-bottom:12px;scroll-behavior:smooth;}
+.chat-box::-webkit-scrollbar{width:4px;}
+.chat-box::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
+.msg{margin-bottom:16px;}
+.msg-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:4px;}
+.msg-label.agent{color:var(--blue-light);}
+.msg-label.user{color:var(--text-dim);}
+.msg-bubble{font-size:13px;line-height:1.6;color:var(--text);padding:10px 14px;border-radius:6px;border:1px solid var(--border);background:var(--surface);}
+.msg-bubble.agent{border-color:rgba(0,120,212,0.2);background:rgba(0,120,212,0.05);}
+.chat-input-row{display:flex;gap:8px;}
+.input{flex:1;background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:0 14px;border-radius:4px;font-size:14px;height:40px;outline:none;font-family:inherit;transition:border-color 0.2s;}
+.input:focus{border-color:var(--blue);}
+.package-box{background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:20px;white-space:pre-wrap;line-height:1.8;font-size:13px;max-height:500px;overflow-y:auto;color:var(--text);}
+.hidden{display:none;}
+.loader{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,0.3);border-top-color:white;border-radius:50%;animation:spin 0.7s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.scan-line{height:2px;background:linear-gradient(90deg,transparent,var(--teal),transparent);border-radius:1px;margin-top:8px;animation:scan 1.5s ease-in-out infinite;display:none;}
+.scanning .scan-line{display:block;}
+@keyframes scan{0%{transform:translateX(-100%);}100%{transform:translateX(100%);}}
 </style>
 </head>
 <body>
-
 <div class="header">
 <a class="logo" href="#">
 <div class="logo-icon">
 <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-<defs>
-<linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
-<stop offset="0%" style="stop-color:#0078d4"/>
-<stop offset="100%" style="stop-color:#00b4d8"/>
-</linearGradient>
-</defs>
+<defs><linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#0078d4"/><stop offset="100%" style="stop-color:#00b4d8"/></linearGradient></defs>
 <path d="M14 2L26 14L14 26L2 14Z" fill="url(#grad1)" opacity="0.9"/>
 <path d="M14 7L21 14L14 21L7 14Z" fill="white" opacity="0.15"/>
 <circle cx="14" cy="14" r="3" fill="white" opacity="0.9"/>
@@ -619,9 +109,7 @@ display: none;
 </div>
 <div class="header-right">Microsoft Agents League 2026</div>
 </div>
-
 <div class="app">
-
 <div class="sidebar">
 <div>
 <div class="sidebar-section-title">Departing Employee</div>
@@ -630,45 +118,28 @@ display: none;
 <div class="employee-name">James Carter</div>
 <div class="employee-role">Senior Software Engineer</div>
 <div class="employee-stats">
-<div class="emp-stat">
-<div class="emp-stat-label">Department</div>
-<div class="emp-stat-value">Engineering</div>
-</div>
-<div class="emp-stat">
-<div class="emp-stat-label">Sources</div>
-<div class="emp-stat-value">4</div>
+<div class="emp-stat"><div class="emp-stat-label">Department</div><div class="emp-stat-value">Engineering</div></div>
+<div class="emp-stat"><div class="emp-stat-label">Sources</div><div class="emp-stat-value">4</div></div>
 </div>
 </div>
 </div>
-</div>
-
 <div>
 <div class="sidebar-section-title">Agent Pipeline</div>
 <div class="pipeline-steps">
 <div class="pipeline-step idle" id="step1">
 <div class="step-indicator" id="stepnum1">1</div>
-<div>
-<div class="step-info-title">Knowledge Collection</div>
-<div class="step-info-desc">Scanning Microsoft 365 data sources</div>
-</div>
+<div><div class="step-info-title">Knowledge Collection</div><div class="step-info-desc">Scanning Microsoft 365 data sources</div></div>
 </div>
 <div class="pipeline-step idle" id="step2">
 <div class="step-indicator" id="stepnum2">2</div>
-<div>
-<div class="step-info-title">Exit Interview</div>
-<div class="step-info-desc">AI-led knowledge extraction</div>
-</div>
+<div><div class="step-info-title">Exit Interview</div><div class="step-info-desc">AI-led knowledge extraction</div></div>
 </div>
 <div class="pipeline-step idle" id="step3">
 <div class="step-indicator" id="stepnum3">3</div>
-<div>
-<div class="step-info-title">Package Generation</div>
-<div class="step-info-desc">Building handoff document</div>
+<div><div class="step-info-title">Package Generation</div><div class="step-info-desc">Building handoff document</div></div>
 </div>
 </div>
 </div>
-</div>
-
 <div>
 <div class="sidebar-section-title">Data Sources</div>
 <div class="sources">
@@ -680,31 +151,22 @@ display: none;
 <div class="scan-line" id="scanLine"></div>
 </div>
 </div>
-
 <div class="main-content" id="mainContent">
-
 <div class="start-area" id="startArea">
 <svg class="start-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-<defs>
-<linearGradient id="startGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-<stop offset="0%" style="stop-color:#0078d4"/>
-<stop offset="100%" style="stop-color:#00b4d8"/>
-</linearGradient>
-</defs>
+<defs><linearGradient id="startGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#0078d4"/><stop offset="100%" style="stop-color:#00b4d8"/></linearGradient></defs>
 <path d="M32 4L60 32L32 60L4 32Z" fill="url(#startGrad)" opacity="0.2"/>
 <path d="M32 12L52 32L32 52L12 32Z" fill="url(#startGrad)" opacity="0.4"/>
 <path d="M32 20L44 32L32 44L20 32Z" fill="url(#startGrad)"/>
 </svg>
 <div class="start-title">Carry the <strong>Knowledge</strong> Forward.</div>
-<div class="start-desc">Handoff uses AI to automatically extract institutional knowledge from departing employees.</div>
+<div class="start-desc">Handoff uses AI to automatically extract institutional knowledge from departing employees so nothing leaves with them.</div>
 <button class="btn btn-primary" id="startBtn" onclick="startOffboarding()">Start Offboarding Agent</button>
 </div>
-
 <div class="card hidden" id="knowledgePanel">
 <div class="card-header">Extracted Knowledge</div>
 <div class="knowledge-grid" id="knowledgeContent"></div>
 </div>
-
 <div class="card hidden" id="interviewPanel">
 <div class="card-header">Exit Interview</div>
 <div class="chat-box" id="chatBox"></div>
@@ -714,141 +176,25 @@ display: none;
 <button class="btn btn-secondary" onclick="generatePackage()">Generate Package</button>
 </div>
 </div>
-
 <div class="card hidden" id="packagePanel">
 <div class="card-header">Knowledge Transfer Package</div>
 <div class="package-box" id="packageContent"></div>
 <div style="margin-top:16px;display:flex;gap:8px;">
-<button class="btn btn-primary" onclick="window.print()">Export Package</button>
+<button class="btn btn-primary" onclick="downloadPackage()">Export Package</button>
 </div>
 </div>
-
 </div>
 </div>
-
 <script>
-const EMPLOYEE_ID = 'emp_001';
-
-function setStep(n, status) {
-const el = document.getElementById('step' + n);
-const num = document.getElementById('stepnum' + n);
-el.className = 'pipeline-step ' + status;
-if (status === 'active') num.innerHTML = '<div class="loader" style="border-top-color:white;"></div>';
-if (status === 'done') num.textContent = '✓';
-if (status === 'idle') num.textContent = n;
-}
-
-function activateSource(id) {
-document.getElementById(id).classList.add('active');
-}
-
-function addMessage(role, content) {
-const box = document.getElementById('chatBox');
-const msg = document.createElement('div');
-msg.className = 'msg';
-msg.innerHTML = `
-<div class="msg-label ${role}">${role === 'agent' ? 'Handoff Agent' : 'James Carter'}</div>
-<div class="msg-bubble ${role}">${content}</div>
-`;
-box.appendChild(msg);
-box.scrollTop = box.scrollHeight;
-}
-
-async function startOffboarding() {
-const btn = document.getElementById('startBtn');
-btn.disabled = true;
-btn.innerHTML = '<div class="loader"></div> Scanning...';
-setStep(1, 'active');
-
-document.getElementById('scanLine').parentElement.classList.add('scanning');
-
-setTimeout(() => activateSource('src-email'), 300);
-setTimeout(() => activateSource('src-onedrive'), 800);
-setTimeout(() => activateSource('src-teams'), 1300);
-setTimeout(() => activateSource('src-repos'), 1800);
-
-try {
-const res = await fetch('/api/start', {
-method: 'POST',
-headers: { 'Content-Type': 'application/json' },
-body: JSON.stringify({ employeeId: EMPLOYEE_ID })
-});
-const data = await res.json();
-
-document.getElementById('scanLine').parentElement.classList.remove('scanning');
-setStep(1, 'done');
-document.getElementById('startArea').classList.add('hidden');
-
-const kc = document.getElementById('knowledgeContent');
-kc.innerHTML = `
-<div class="knowledge-block systems">
-<div class="knowledge-block-title">Critical Systems</div>
-${(data.knowledge.criticalSystems || []).map(s => `<span class="tag tag-red">${s}</span>`).join('')}
-</div>
-<div class="knowledge-block risks">
-<div class="knowledge-block-title">Urgent Risks</div>
-${(data.knowledge.urgentRisks || []).map(r => `<div class="risk-item">${r}</div>`).join('')}
-</div>
-<div class="knowledge-block relationships">
-<div class="knowledge-block-title">Key Relationships</div>
-${(data.knowledge.keyRelationships || []).map(r => `<span class="tag tag-teal">${r}</span>`).join('')}
-</div>
-`;
-
-document.getElementById('knowledgePanel').classList.remove('hidden');
-setStep(2, 'active');
-document.getElementById('interviewPanel').classList.remove('hidden');
-addMessage('agent', data.firstMessage);
-
-} catch (err) {
-alert('Error: ' + err.message);
-btn.disabled = false;
-btn.innerHTML = 'Start Offboarding Agent';
-setStep(1, 'idle');
-}
-}
-
-async function sendMessage() {
-const input = document.getElementById('userInput');
-const msg = input.value.trim();
-if (!msg) return;
-input.value = '';
-addMessage('user', msg);
-
-try {
-const res = await fetch('/api/interview', {
-method: 'POST',
-headers: { 'Content-Type': 'application/json' },
-body: JSON.stringify({ employeeId: EMPLOYEE_ID, message: msg })
-});
-const data = await res.json();
-addMessage('agent', data.message);
-} catch (err) {
-addMessage('agent', 'Error connecting to agent.');
-}
-}
-
-function handleKey(e) { if (e.key === 'Enter') sendMessage(); }
-
-async function generatePackage() {
-setStep(2, 'done');
-setStep(3, 'active');
-
-try {
-const res = await fetch('/api/generate-package', {
-method: 'POST',
-headers: { 'Content-Type': 'application/json' },
-body: JSON.stringify({ employeeId: EMPLOYEE_ID })
-});
-const data = await res.json();
-setStep(3, 'done');
-document.getElementById('packageContent').textContent = data.package;
-document.getElementById('packagePanel').classList.remove('hidden');
-document.getElementById('packagePanel').scrollIntoView({ behavior: 'smooth' });
-} catch (err) {
-alert('Error: ' + err.message);
-}
-}
+const EMPLOYEE_ID='emp_001';
+function setStep(n,status){const el=document.getElementById('step'+n);const num=document.getElementById('stepnum'+n);el.className='pipeline-step '+status;if(status==='active')num.innerHTML='<div class="loader" style="border-top-color:white;"></div>';if(status==='done')num.textContent='✓';if(status==='idle')num.textContent=n;}
+function activateSource(id){document.getElementById(id).classList.add('active');}
+function addMessage(role,content){const box=document.getElementById('chatBox');const msg=document.createElement('div');msg.className='msg';msg.innerHTML=`<div class="msg-label ${role}">${role==='agent'?'Handoff Agent':'James Carter'}</div><div class="msg-bubble ${role}">${content}</div>`;box.appendChild(msg);box.scrollTop=box.scrollHeight;}
+async function startOffboarding(){const btn=document.getElementById('startBtn');btn.disabled=true;btn.innerHTML='<div class="loader"></div> Scanning...';setStep(1,'active');document.getElementById('scanLine').parentElement.classList.add('scanning');setTimeout(()=>activateSource('src-email'),300);setTimeout(()=>activateSource('src-onedrive'),800);setTimeout(()=>activateSource('src-teams'),1300);setTimeout(()=>activateSource('src-repos'),1800);try{const res=await fetch('/api/start',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({employeeId:EMPLOYEE_ID})});const data=await res.json();document.getElementById('scanLine').parentElement.classList.remove('scanning');setStep(1,'done');document.getElementById('startArea').classList.add('hidden');const kc=document.getElementById('knowledgeContent');kc.innerHTML=`<div class="knowledge-block systems"><div class="knowledge-block-title">Critical Systems</div>${(data.knowledge.criticalSystems||[]).map(s=>`<span class="tag tag-red">${s}</span>`).join('')}</div><div class="knowledge-block risks"><div class="knowledge-block-title">Urgent Risks</div>${(data.knowledge.urgentRisks||[]).map(r=>`<div class="risk-item">${r}</div>`).join('')}</div><div class="knowledge-block relationships"><div class="knowledge-block-title">Key Relationships</div>${(data.knowledge.keyRelationships||[]).map(r=>`<span class="tag tag-teal">${r}</span>`).join('')}</div>`;document.getElementById('knowledgePanel').classList.remove('hidden');setStep(2,'active');document.getElementById('interviewPanel').classList.remove('hidden');addMessage('agent',data.firstMessage);}catch(err){alert('Error: '+err.message);btn.disabled=false;btn.innerHTML='Start Offboarding Agent';setStep(1,'idle');}}
+async function sendMessage(){const input=document.getElementById('userInput');const msg=input.value.trim();if(!msg)return;input.value='';addMessage('user',msg);try{const res=await fetch('/api/interview',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({employeeId:EMPLOYEE_ID,message:msg})});const data=await res.json();addMessage('agent',data.message);}catch(err){addMessage('agent','Error connecting to agent.');}}
+function handleKey(e){if(e.key==='Enter')sendMessage();}
+async function generatePackage(){setStep(2,'done');setStep(3,'active');try{const res=await fetch('/api/generate-package',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({employeeId:EMPLOYEE_ID})});const data=await res.json();setStep(3,'done');document.getElementById('packageContent').textContent=data.package;document.getElementById('packagePanel').classList.remove('hidden');document.getElementById('packagePanel').scrollIntoView({behavior:'smooth'});}catch(err){alert('Error: '+err.message);}}
+function downloadPackage(){const content=document.getElementById('packageContent').textContent;const blob=new Blob([content],{type:'text/plain'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='handoff-knowledge-package.txt';a.click();}
 </script>
 </body>
 </html>
