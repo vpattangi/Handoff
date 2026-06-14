@@ -106,5 +106,31 @@ Microsoft Graph API integration pulls real enterprise data:
 • OneDrive documents
 • Authenticated via Microsoft Entra ID with delegated permissions
 
+## Security & Input Sanitization
+
+All user input is sanitized before processing:
+- Input length limited to 2000 characters
+- HTML tags stripped to prevent XSS
+- Prompt injection patterns detected and removed (e.g. "ignore previous instructions", "system prompt", "forget everything")
+- System and user message namespaces kept separate in all LLM calls
+- Microsoft Graph tokens validated for expiry before each API call
+
+## Hallucination Prevention
+
+The CitationValidation layer cross-references all agent responses against retrieved data:
+- Responses are validated against source data before being returned
+- Confidence scoring: HIGH, MEDIUM, LOW based on verifiability
+- Unverified references are flagged and logged
+- Agent is instructed never to use training data — only retrieved Microsoft 365 content
+
+## Production Roadmap
+
+In a production deployment Handoff would:
+- Integrate with Microsoft Teams via webhook to automatically trigger when HR initiates offboarding
+- Send the departing employee an email via Outlook with a link to their exit interview
+- Save the generated knowledge package to SharePoint for the incoming employee
+- Use Power Automate to route the package to the right people automatically
+- Implement refresh token flow for Microsoft Graph instead of manual re-authentication
+
 ## 📄 License
 Apache 2.0
