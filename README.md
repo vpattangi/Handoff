@@ -19,6 +19,45 @@ Handoff solves this by making knowledge transfer automatic, structured, and AI-p
 ## 👩‍🎓 About the Developer
 CS Student @ San Jose State University. This project was inspired by a real KT failure experienced by a family member during corporate offboarding. Built for the Microsoft Agents League Hackathon 2026.
 
+## Business Case & ROI
+
+Knowledge loss is one of the most underestimated costs in enterprise operations. Every time a senior employee leaves, their institutional knowledge leaves with them — and most organizations have no system to stop it.
+
+### The Cost of Getting This Wrong
+
+| Cost Driver | Estimated Impact |
+|---|---|
+| Replacing a senior employee | $50,000 to $150,000 |
+| Lost productivity per week of knowledge gap | $2,000 to $5,000 |
+| Engineering hours spent rediscovering undocumented processes | 40 to 120 hours per offboarding event |
+| Increased error rate from knowledge gaps | Highly variable, often critical |
+
+For an organization losing 10 senior employees per year, unmanaged knowledge transfer costs an estimated $500,000 to $1,500,000 annually in direct and indirect losses.
+
+### How Handoff Compresses That Cost
+
+- **Reduces time-to-productivity** for incoming employees by delivering a complete, role-specific knowledge package before day one
+- **Eliminates undocumented process risk** by using AI to surface institutional knowledge that employees never thought to write down
+- **Scales linearly** across the organization without additional HR overhead — one agent handles every offboarding event the same way
+- **Integrates into existing Microsoft 365 workflows** so adoption friction is near zero for enterprises already on the Microsoft stack
+
+### The ROI Formula
+
+If Handoff reduces the knowledge gap period by just two weeks per offboarding event, and the fully-loaded cost of an engineer is $100,000 per year:
+
+> 2 weeks saved x $100,000 / 52 weeks = **$3,846 saved per offboarding event**
+
+At 10 offboarding events per year that is **$38,460 in direct ROI** — not counting reduced error rates, faster onboarding, or preserved institutional knowledge that would otherwise be permanently lost.
+
+### Target Market
+
+- **Enterprise HR teams** seeking to modernize offboarding workflows
+- **Engineering organizations** with high attrition or rapid scaling
+- **Regulated industries** (finance, healthcare, legal) where knowledge loss creates compliance risk
+- **Any Microsoft 365 organization** looking to protect institutional knowledge at scale
+
+Handoff is not a nice-to-have. It is infrastructure for organizational memory.
+
 ## 🏗 Architecture
 ```
 User (HR) → Handoff UI
